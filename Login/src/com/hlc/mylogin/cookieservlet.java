@@ -47,6 +47,8 @@ public class cookieservlet extends HttpServlet {
 				loginService ls =new loginServiceImpl();
 				User u =ls.checkUidService(uid);
 				if(u!=null){
+					//将用户数据存储在session对象中
+					req.getSession().setAttribute("user", u);
 					//重定向
 					resp.sendRedirect("main");
 					return ;

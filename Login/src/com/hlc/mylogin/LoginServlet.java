@@ -39,6 +39,12 @@ package com.hlc.mylogin;
  *		时机：
  *			如果请求中有表单数据，而数据又比较重要，不能重复提交，建议使用重定向。
  *			如果请求被Servlet接收后，无法进行处理，建议使用重定向定位到可以处理的资源。	
+ *解决主页面用户名显示为null的问题
+ *原因：
+ *		因为在用户登陆成功后使用重定向显示主页面，两次请求，而页面的信息在上一次请求中，
+ *		第二次请求中没有用户数据，所以显示为null
+ *解决：
+ *		使用session
  */
 import java.io.IOException;
 
@@ -47,6 +53,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.hlc.Service.loginService;
 import com.hlc.Service.impl.loginServiceImpl;
@@ -85,9 +92,14 @@ public class LoginServlet extends HttpServlet {
 			resp.addCookie(c);
 			//请求转发
 			//req.getRequestDispatcher("main").forward(req, resp);
+			//将数据存储到session对象中
+			HttpSession hs =req.getSession();
+			hs.setAttribute("user", u);
+			
 			//重定向
 			//重定向后是另一次新的request，所以没有上次请求的数据，所以页面显示null
-			resp.sendRedirect("/Login/main");//或者直接用resp.sendRedirect("main");
+			//resp.sendRedirect("/Login/main");//或者直接用
+			resp.sendRedirect("main");
 			return;
 		}else{
 			
@@ -115,6 +127,7 @@ public class LoginServlet extends HttpServlet {
 			 */
 			req.getRequestDispatcher("Page").forward(req, resp);
 			return ;
+			
 		}
 			
 	}
