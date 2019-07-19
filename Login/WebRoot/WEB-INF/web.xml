@@ -51,7 +51,13 @@
     <servlet-name>showServlet</servlet-name>
     <servlet-class>com.hlc.mylogin.showServlet</servlet-class>
   </servlet>
-
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>numServlet</servlet-name>
+    <servlet-class>com.hlc.mylogin.numServlet</servlet-class>
+   <load-on-startup>1</load-on-startup>
+  </servlet>
   <servlet-mapping>
     <servlet-name>cookieServlet</servlet-name>
     <url-pattern>/cookie</url-pattern>
@@ -60,4 +66,10 @@
     <servlet-name>showServlet</servlet-name>
     <url-pattern>/show</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>numServlet</servlet-name>
+    <url-pattern>/num</url-pattern>
+  </servlet-mapping>
+ 
+ 
 </web-app>

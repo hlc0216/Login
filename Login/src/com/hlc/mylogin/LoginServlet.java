@@ -45,9 +45,11 @@ package com.hlc.mylogin;
  *		第二次请求中没有用户数据，所以显示为null
  *解决：
  *		使用session
+ *使用ServletContext对象完成网页计数器
  */
 import java.io.IOException;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -95,6 +97,17 @@ public class LoginServlet extends HttpServlet {
 			//将数据存储到session对象中
 			HttpSession hs =req.getSession();
 			hs.setAttribute("user", u);
+			//使用ServletContext对象创建网页计数器
+				//获取计数数据
+			ServletContext sc=this.getServletContext();
+			if(sc.getAttribute("nums")!=null){
+				int nums=Integer.parseInt((String) sc.getAttribute("nums"));
+				nums++;//自增
+				//再次存储到ServletContext对象
+				sc.setAttribute("nums", nums);
+			}else{
+				sc.setAttribute("nums", 1);
+			}
 			
 			//重定向
 			//重定向后是另一次新的request，所以没有上次请求的数据，所以页面显示null

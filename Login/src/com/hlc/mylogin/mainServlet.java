@@ -1,6 +1,7 @@
 package com.hlc.mylogin;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +21,8 @@ public class mainServlet extends HttpServlet {
 		resp.setContentType("text/html;charset=utf-8");
 		//获取请求信息
 		User u = (User) req.getSession().getAttribute("user");//可能会报空指针异常
+		//获取网页浏览次数
+		int nums =(int) this.getServletContext().getAttribute("nums");
 		//处理请求信息
 		//相应处理结果
 		resp.getWriter().write("<html>");
@@ -27,6 +30,7 @@ public class mainServlet extends HttpServlet {
 		resp.getWriter().write("</head>");
 		resp.getWriter().write("<body>");
 		resp.getWriter().write("<h3>欢迎"+u.getUname()+"来到hlc空间</h3>");
+		resp.getWriter().write("当前网页浏览次数为"+nums);
 		resp.getWriter().write("<hr>");
 		resp.getWriter().write("<form action='show' method='get'>");
 		resp.getWriter().write("<input type='submit' value='查看个人信息'>");

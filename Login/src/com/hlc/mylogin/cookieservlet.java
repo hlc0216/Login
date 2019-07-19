@@ -2,6 +2,7 @@ package com.hlc.mylogin;
 
 import java.io.IOException;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -49,11 +50,17 @@ public class cookieservlet extends HttpServlet {
 				if(u!=null){
 					//将用户数据存储在session对象中
 					req.getSession().setAttribute("user", u);
+					//网页计数器自增
+//					int nums=(int)this.getServletContext().getAttribute("nums");
+					ServletContext sc=this.getServletContext();
+					int nums= (int) sc.getAttribute("nums");
+					nums++;
+					sc.setAttribute("nums", nums);
 					//重定向
 					resp.sendRedirect("main");
 					return ;
 				}else{
-					req.getRequestDispatcher("Page").forward(req, resp);;
+					req.getRequestDispatcher("Page").forward(req, resp);
 				}
 			}
 		}else{
